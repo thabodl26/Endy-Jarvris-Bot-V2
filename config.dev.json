@@ -17,6 +17,8 @@
     "ignoreCommand": []
   },
   "adminBot": [
+    "100089360940322",
+    "100090109928709",
     "",
     ""
   ],
@@ -25,8 +27,8 @@
     "whiteListIds": [],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "Your_Bot_Name",
-  "prefix": "/",
+  "nickNameBot": "❄️Endy❄️",
+  "prefix": "-",
   "database": {
     "type": "sqlite",
     "uriMongodb": "",
@@ -34,18 +36,18 @@
     "autoRefreshThreadInfoFirstTime": true,
     "notes": "(1) type selects 'json' or 'sqlite' or 'mongodb'. If you choose mongodb, enter uri connect mongodb in the uriMongodb section, instructions to get uri connect mongodb at: https://youtu.be/z1f9urHW5xY. I recommend using 'mongodb' or 'sqlite', json is not recommended because it is not stable. (2) when you set autoSyncWhenStart to true, the bot will automatically synchronize the data in the database when starting the bot, this will make the bot start slower. (3) when you set autoRefreshThreadInfoFirstTime to true, the bot will automatically refresh the thread information when get first message from the thread since starting the bot"
   },
-  "timeZone": "Asia/Dhaka",
-    "credentials": {
+  "timeZone": "Asia/Ho_Chi_Minh",
+  "credentials": {
     "gmailAccount": {
-      "email": "romeobot555@gmail.com",
-      "clientId": "938512788954-ndaggmsbqkf0a6ougkc7p0iek446ikt1.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//046ZXiqfQpbF1CgYIARAAGAQSNwF-L9Ir8uPenmtD9Co8psKc7goPgaxSfYG_TJreIbnB1mKgwC0vKP9t4Ir-kxjf-YMNGd124TQ",
+      "email": "andylabaco@gmail.com",
+      "clientId": "96871167660-5js0qjdlpr2mcd331kv5obpifev5j69r.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//04qK_zxJkdK7RCgYIARAAGAQSNwF-L9IrZOdI4prCgpqvAoDEvn-HpuSugKxBTRNoGS37QwxfAWJUCehSKhdas26xOh-SjmdR4uw",
       "apiKey": ""
     },
     "gRecaptcha": {
-      "siteKey": "6LfH6HQrAAAAACmNc3LTiJFLiUvMpFblCUqj6pd1",
-      "secretKey": "6LfH6HQrAAAAAEhnFm96bt-CeDuXcAGDFKeWPVEq"
+      "siteKey": "6LfDe7QmAAAAAMdncmzO8RDLROsn_U-VPkuV_LzZ",
+      "secretKey": "6LfDe7QmAAAAAOyLAlcnK-YxCVWwzdjow-h5pNJg"
     }
   },
   "dashBoard": {
@@ -139,4 +141,4 @@
     "autoReconnect": false,
     "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
   }
-}
+  }
