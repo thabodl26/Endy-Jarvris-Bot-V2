@@ -1,20 +1,19 @@
-const axios = require("axios");
 const ytdl = require("@distube/ytdl-core");
+const yts = require("yt-search");
+const ffmpegPath = require("ffmpeg-static");
+const cp = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const ffmpeg = require("ffmpeg-static");
-const { spawn } = require("child_process");
 
 module.exports = {
   config: {
     name: "music",
-    aliases: ["song", "mp3"],
     version: "1.0",
-    author: "Danny",
+    author: "Danny Codex",
     countDown: 10,
     role: 0,
-    shortDescription: "Download music as mp3",
-    longDescription: "Search YouTube and download the audio as an MP3 file to play in Messenger.",
+    shortDescription: "Download and play music",
+    longDescription: "Search YouTube and play audio as MP3 directly in chat.",
     category: "music",
     guide: {
       en: "{pn} <song name>\nExample: {pn} one dance drake"
@@ -32,52 +31,46 @@ module.exports = {
     }
 
     try {
-      // Step 1: Search YouTube using Piped API (no key needed)
-      const searchUrl = `https://piped.video/api/v1/search?q=${encodeURIComponent(query)}`;
-      const searchRes = await axios.get(searchUrl);
-      const video = searchRes.data?.items?.[0];
-      if (!video) {
+      // 1. Search YouTube
+      const r = await yts(query);
+      if (!r.videos.length) {
         return api.sendMessage("❌ No results found.", event.threadID, event.messageID);
       }
+      const video = r.videos[0];
 
-      const videoUrl = `https://www.youtube.com/watch?v=${video.id}`;
-      const title = video.title.replace(/[^\w\s]/gi, "").substring(0, 50); // clean + limit filename
-      const tempPath = path.join(__dirname, `${title}.mp3`);
+      const filePath = path.join(__dirname, `music-${Date.now()}.mp3`);
 
-      // Step 2: Download audio stream
-      const audioStream = ytdl(videoUrl, { filter: "audioonly", quality: "highestaudio" });
-
-      // Step 3: Convert to MP3 using ffmpeg
-      const ffmpegProcess = spawn(ffmpeg, [
-        "-i", "pipe:3",
-        "-f", "mp3",
-        "-ab", "192k",
+      // 2. Stream + convert with ffmpeg
+      const stream = ytdl(video.url, { filter: "audioonly", quality: "highestaudio" });
+      const ffmpeg = cp.spawn(ffmpegPath, [
+        "-i", "pipe:0",
         "-vn",
-        tempPath
-      ], {
-        stdio: ["inherit", "inherit", "inherit", "pipe"]
-      });
+        "-ar", "44100",
+        "-ac", "2",
+        "-b:a", "192k",
+        "-f", "mp3",
+        "pipe:1"
+      ]);
 
-      audioStream.pipe(ffmpegProcess.stdio[3]);
+      const writeStream = fs.createWriteStream(filePath);
+      stream.pipe(ffmpeg.stdin);
+      ffmpeg.stdout.pipe(writeStream);
 
-      ffmpegProcess.on("close", async () => {
-        // Step 4: Send MP3 file
+      ffmpeg.on("close", async () => {
         api.sendMessage(
           {
-            body: `🎶 Now playing: ${video.title}`,
-            attachment: fs.createReadStream(tempPath)
+            body: `🎶 Now playing: ${video.title}\n👤 ${video.author.name}\n⏱️ ${video.timestamp}\n📺 ${video.url}`,
+            attachment: fs.createReadStream(filePath)
           },
           event.threadID,
-          () => {
-            fs.unlinkSync(tempPath); // delete after sending
-          },
+          () => fs.unlinkSync(filePath),
           event.messageID
         );
       });
 
     } catch (err) {
       console.error(err);
-      api.sendMessage("❌ Error: Could not download music.", event.threadID, event.messageID);
+      api.sendMessage("❌ Error fetching music. Please try again later.", event.threadID, event.messageID);
     }
   }
 };
