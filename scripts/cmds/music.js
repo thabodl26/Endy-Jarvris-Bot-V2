@@ -1,4 +1,4 @@
-const ytdlp = require("youtube-dl-exec");
+const ytdlp = require("yt-dlp-exec");
 const ffmpegPath = require("ffmpeg-static");
 const fs = require("fs");
 const path = require("path");
@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "music",
     aliases: ["song", "mp3"],
-    version: "1.5",
+    version: "1.6",
     author: "Danny",
     countDown: 10,
     role: 0,
