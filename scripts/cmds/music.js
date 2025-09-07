@@ -1,4 +1,4 @@
-const ytdlp = require("yt-dlp-exec");
+const ytdlp = require("youtube-dl-exec");
 const ffmpegPath = require("ffmpeg-static");
 const fs = require("fs");
 const path = require("path");
