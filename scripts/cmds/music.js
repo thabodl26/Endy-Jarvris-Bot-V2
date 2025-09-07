@@ -1,4 +1,4 @@
-const ytdlp = require("yt-dlp-exec");
+const ytdlp = require("youtube-dl-exec");
 const ffmpegPath = require("ffmpeg-static");
 const fs = require("fs");
 const path = require("path");
@@ -7,8 +7,8 @@ module.exports = {
   config: {
     name: "music",
     aliases: ["song", "mp3"],
-    version: "1.4",
-    author: "Danny Will",
+    version: "1.5",
+    author: "Danny",
     countDown: 10,
     role: 0,
     shortDescription: "Download MP3 from YouTube",
@@ -42,14 +42,14 @@ module.exports = {
         return api.sendMessage("❌ No results found.", event.threadID, event.messageID);
       }
 
-      const song = entries[0]; // first search result
+      const song = entries[0];
       const title = song.title || "Unknown Title";
       const durationSeconds = song.duration || 0;
       const durationFormatted = durationSeconds
         ? `${Math.floor(durationSeconds / 60)}:${String(durationSeconds % 60).padStart(2, "0")}`
         : "Unknown";
 
-      // Step 1.5: Block very long songs (over 15 minutes)
+      // Limit to 15 minutes
       if (durationSeconds > 900) {
         return api.sendMessage(
           `⚠️ The song **${title}** is too long (${durationFormatted}). I can only fetch tracks under 15 minutes.`,
@@ -85,7 +85,13 @@ module.exports = {
           attachment: fs.createReadStream(filePath)
         },
         event.threadID,
-        () => fs.unlinkSync(filePath),
+        () => {
+          try {
+            fs.unlinkSync(filePath); // delete after sending
+          } catch (e) {
+            console.error("Cleanup failed:", e);
+          }
+        },
         event.messageID
       );
     } catch (err) {
