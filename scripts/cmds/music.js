@@ -1,4 +1,4 @@
-const ytdlp = require("youtube-dl-exec");
+const ytdlp = require("yt-dlp-exec");
 const ffmpegPath = require("ffmpeg-static");
 const fs = require("fs");
 const path = require("path");
@@ -27,11 +27,7 @@ module.exports = {
       );
     }
 
-    // Generate unique filename per request
-    const filePath = path.join(
-      __dirname,
-      `music_${Date.now()}_${Math.floor(Math.random() * 1000)}.mp3`
-    );
+    const filePath = path.join(__dirname, `music_${Date.now()}.mp3`);
 
     try {
       // Step 1: Search YouTube
