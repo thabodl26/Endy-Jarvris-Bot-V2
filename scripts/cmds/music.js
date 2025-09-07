@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "music",
     aliases: ["song", "mp3"],
-    version: "1.6",
+    version: "1.7",
     author: "Danny",
     countDown: 10,
     role: 0,
@@ -27,7 +27,11 @@ module.exports = {
       );
     }
 
-    const filePath = path.join(__dirname, "music.mp3");
+    // Generate unique filename per request
+    const filePath = path.join(
+      __dirname,
+      `music_${Date.now()}_${Math.floor(Math.random() * 1000)}.mp3`
+    );
 
     try {
       // Step 1: Search YouTube
