@@ -1,6 +1,6 @@
 {
   "name": "Endy-Jarvris-Bot-V2",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A simple Messenger Bot with music support",
   "main": "index.js",
   "engines": {
@@ -8,7 +8,9 @@
     "npm": ">=9.0.0"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.13.3",
+    "yt-dlp-exec": "^2.5.6",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.2",
     "axios": "^1.4.0",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
@@ -46,10 +48,7 @@
     "sqlite3": "^5.1.7",
     "tinyurl": "^1.1.7",
     "totp-generator": "^0.0.14",
-    "websocket-stream": "^5.5.2",
-    "ffmpeg-static": "^5.2.0",
-    "fluent-ffmpeg": "^2.1.2",
-    "youtube-dl-exec": "^3.0.25"
+    "websocket-stream": "^5.5.2"
   },
   "scripts": {
     "start": "NODE_ENV= node index.js",
