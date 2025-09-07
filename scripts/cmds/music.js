@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "music",
     aliases: ["song", "mp3"],
-    version: "1.7",
+    version: "1.8",
     author: "Danny",
     countDown: 10,
     role: 0,
@@ -27,6 +27,7 @@ module.exports = {
       );
     }
 
+    // Unique file per request
     const filePath = path.join(__dirname, `music_${Date.now()}.mp3`);
 
     try {
@@ -49,7 +50,7 @@ module.exports = {
         ? `${Math.floor(durationSeconds / 60)}:${String(durationSeconds % 60).padStart(2, "0")}`
         : "Unknown";
 
-      // Limit to 15 minutes
+      // Restrict to 15 minutes
       if (durationSeconds > 900) {
         return api.sendMessage(
           `⚠️ The song **${title}** is too long (${durationFormatted}). I can only fetch tracks under 15 minutes.`,
@@ -87,7 +88,7 @@ module.exports = {
         event.threadID,
         () => {
           try {
-            fs.unlinkSync(filePath); // delete after sending
+            fs.unlinkSync(filePath); // cleanup
           } catch (e) {
             console.error("Cleanup failed:", e);
           }
