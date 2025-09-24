@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // config 
-const apiKey = "4nD5-iixMzkXfV6bNaPM9mDPFi002m5kihXVjGSrZ-AasoygZF6R9SjM_hSu9stLlFXGqXcdgMT3BlbkFJWL3gMNtHO0qgrn58bSmoTQL63uSNTBG4herQXWl2L2XiMdVWChTmpkkmtNMkuZA7t-u3jXfiMA";
+const apiKey = "";
 const maxTokens = 500;
 const numberGenerateImage = 4;
 const maxStorageMessage = 4;
